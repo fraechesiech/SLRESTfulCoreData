@@ -49,6 +49,7 @@
  */
 + (NSString *)defaultDateTimeFormat;
 + (void)setDefaultDateTimeFormat:(NSString *)defaultDateTimeFormat;
++ (void)setDefaultDateFormatter:(NSDateFormatter *)defaultDateFormatter;
 
 /**
  The timezone in which all dates are returned
