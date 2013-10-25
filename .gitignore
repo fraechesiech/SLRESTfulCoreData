@@ -18,3 +18,6 @@ Pods/
 # osx noise
 .DS_Store
 profile
+/Tests/SLRESTfulCoreData.xcodeproj/xcuserdata/
+
+xcuserdata
