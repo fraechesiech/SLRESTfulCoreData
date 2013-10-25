@@ -162,7 +162,7 @@ static void mergeDictionaries(NSMutableDictionary *mainDictionary, NSDictionary 
 }
 
 + (void)setDefaultDateFormatter:(NSDateFormatter *)defaultDateFormatter {
-    objc_setAssociatedObject(self, &SLObjectConverterDefaultDateFormatterKey, defaultDateFormatter, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject([SLObjectConverter class], &SLObjectConverterDefaultDateFormatterKey, defaultDateFormatter, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 + (void)setDefaultDateTimeFormat:(NSString *)defaultDateTimeFormat
