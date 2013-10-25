@@ -335,8 +335,11 @@ static void mergeDictionaries(NSMutableDictionary *mainDictionary, NSDictionary 
         return nil;
     }
     
-    NSDateFormatter *formatter = [self _dateFormatterWithFormat:self.dateTimeFormat];
-    formatter.timeZone = self.timeZone;
+    NSDateFormatter *formatter = objc_getAssociatedObject([SLObjectConverter class], &SLObjectConverterDefaultDateFormatterKey);
+    if (formatter == nil) {
+        formatter = [self _dateFormatterWithFormat:self.dateTimeFormat];
+        formatter.timeZone = self.timeZone;
+    }
     
     return [formatter stringFromDate:date];
 }
