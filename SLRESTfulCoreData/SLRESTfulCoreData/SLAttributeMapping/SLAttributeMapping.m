@@ -238,6 +238,7 @@ static NSDictionary *SLAttributeMappingMergeDictionary(SLAttributeMapping *self,
 {
     if (self = [super init]) {
         _managedObjectClassName = managedObjectClassName;
+        _useUnderscoreConvention = YES;
         
         self.managedObjectJSONObjectAttributesDictionary = [self.class managedObjectJSONObjectAttributesDictionary].mutableCopy;
         self.JSONObjectManagedObjectAttributesDictionary = [self.class JSONObjectManagedObjectAttributesDictionary].mutableCopy;
@@ -432,10 +433,10 @@ static NSDictionary *SLAttributeMappingMergeDictionary(SLAttributeMapping *self,
         }
     }
     
-    NSString *underscoredString = attribute.stringByUnderscoringString;
-    [attributesCache setObject:underscoredString forKey:originalAttribute];
+    NSString *string = (self.useUnderscoreConvention) ? attribute.stringByUnderscoringString : originalAttribute;
+    [attributesCache setObject:string forKey:originalAttribute];
     
-    return underscoredString;
+    return string;
 }
 
 - (NSString *)convertJSONObjectAttributeToManagedObjectAttribute:(NSString *)JSONObjectKeyPath

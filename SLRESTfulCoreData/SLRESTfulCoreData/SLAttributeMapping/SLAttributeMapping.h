@@ -33,6 +33,8 @@
  */
 @interface SLAttributeMapping : NSObject
 
+@property (nonatomic, assign, getter = isUsingUnderscoreConvention) BOOL useUnderscoreConvention; // defaults to YES
+
 - (id)initWithManagedObjectClassName:(NSString *)managedObjectClassName;
 
 + (void)registerDefaultAttribute:(NSString *)attribute forJSONObjectKeyPath:(NSString *)JSONObjectKeyPath;

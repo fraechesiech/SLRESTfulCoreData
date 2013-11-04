@@ -77,6 +77,10 @@ char *const SLRESTfulCoreDataObjectDescriptionKey;
 
 }
 
++ (void)useUnderscoreConvention:(BOOL)useUderscores {
+    [self attributeMapping].useUnderscoreConvention = useUderscores;
+}
+
 + (void)registerAttributeName:(NSString *)attributeName forJSONObjectKeyPath:(NSString *)JSONObjectKeyPath
 {
     SLAttributeMapping *attributeMapping = [self attributeMapping];
