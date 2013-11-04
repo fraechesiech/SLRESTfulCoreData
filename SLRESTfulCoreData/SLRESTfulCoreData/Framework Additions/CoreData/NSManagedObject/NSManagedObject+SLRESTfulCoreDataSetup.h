@@ -47,12 +47,6 @@
  */
 + (SLObjectDescription *)objectDescription;
 
-
-/**
- Change this to enable / disable underscore conventions.
- */
-+ (void)useUnderscoreConvention:(BOOL)useUderscores;
-
 /**
  Registers a mapping between a CoreData attribute and a corresponding key path of a JSON object, with which this object will be updated.
  The default lookup is attributeName.
