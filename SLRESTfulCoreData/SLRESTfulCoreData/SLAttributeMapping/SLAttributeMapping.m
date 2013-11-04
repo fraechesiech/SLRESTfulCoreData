@@ -67,6 +67,8 @@ static void unregisterGlobalObserver(SLAttributeMapping *globalObserver)
     }
 }
 
+static BOOL UseUnderscoreConvention = YES;
+
 
 
 @interface SLAttributeMapping () {
@@ -97,6 +99,8 @@ static void unregisterGlobalObserver(SLAttributeMapping *globalObserver)
 
 @property (nonatomic, strong) NSMutableDictionary *JSONObjectManagedObjectNamingConventions; // { "my_value" : "myValue" }
 @property (nonatomic, readonly) NSDictionary *mergedJSONObjectManagedObjectNamingConventions;
+
+@property (nonatomic, readonly, getter = isUsingUnderscoreConvention) BOOL useUnderscoreConvention; // defaults to YES
 
 - (void)_mergeDictionary:(NSMutableDictionary *)thisDictionary withOtherDictionary:(NSMutableDictionary *)otherDictionary;
 - (void)_clearCache;
@@ -188,6 +192,10 @@ static NSDictionary *SLAttributeMappingMergeDictionary(SLAttributeMapping *self,
     return JSONObjectManagedObjectNamingConventions;
 }
 
++ (void)useUnderscoreConvention:(BOOL)useUnderscores {
+    UseUnderscoreConvention = useUnderscores;
+}
+
 - (NSArray *)mergedUnregisteresAttributeNames
 {
     NSMutableArray *unregisteresAttributeNames = self.unregisteresAttributeNames.mutableCopy;
@@ -238,7 +246,6 @@ static NSDictionary *SLAttributeMappingMergeDictionary(SLAttributeMapping *self,
 {
     if (self = [super init]) {
         _managedObjectClassName = managedObjectClassName;
-        _useUnderscoreConvention = YES;
         
         self.managedObjectJSONObjectAttributesDictionary = [self.class managedObjectJSONObjectAttributesDictionary].mutableCopy;
         self.JSONObjectManagedObjectAttributesDictionary = [self.class JSONObjectManagedObjectAttributesDictionary].mutableCopy;
@@ -277,6 +284,10 @@ static NSDictionary *SLAttributeMappingMergeDictionary(SLAttributeMapping *self,
     [[self JSONObjectManagedObjectAttributesDictionary] removeObjectForKey:JSONObjectKeyPath];
     
     clearCacheOfGlobalObservers();
+}
+
+- (BOOL)isUsingUnderscoreConvention {
+    return UseUnderscoreConvention;
 }
 
 - (void)registerAttribute:(NSString *)attribute forJSONObjectKeyPath:(NSString *)JSONObjectKeyPath
