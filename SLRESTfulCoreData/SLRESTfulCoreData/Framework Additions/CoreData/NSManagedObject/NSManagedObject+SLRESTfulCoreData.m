@@ -329,6 +329,9 @@ char *const SLRESTfulCoreDataBackgroundThreadActionKey;
         
         if (value) {
             NSString *JSONObjectKeyPath = [attributeMapping convertManagedObjectAttributeToJSONObjectAttribute:attributeName];
+            if ([JSONObjectKeyPath isEqualToString:[[[self class] objectDescription] uniqueIdentifierOfJSONObjects]]) {
+                continue;
+            }
             id JSONObjectValue = [objectConverter JSONObjectObjectFromManagedObjectObject:value
                                                                 forManagedObjectAttribute:attributeName];
             
