@@ -327,33 +327,31 @@ char *const SLRESTfulCoreDataBackgroundThreadActionKey;
     for (NSString *attributeName in [self.class registeredAttributeNames]) {
         id value = [self valueForKey:attributeName];
         
-        if (value) {
-            NSString *JSONObjectKeyPath = [attributeMapping convertManagedObjectAttributeToJSONObjectAttribute:attributeName];
-            if ([JSONObjectKeyPath isEqualToString:[[[self class] objectDescription] uniqueIdentifierOfJSONObjects]]) {
-                continue;
-            }
-            id JSONObjectValue = [objectConverter JSONObjectObjectFromManagedObjectObject:value
-                                                                forManagedObjectAttribute:attributeName];
-            
-            if (!JSONObjectValue) {
-                continue;
-            }
-            
-            __block NSMutableDictionary *currentDictionary = rawJSONDictionary;
-            
-            NSArray *JSONObjectKeyPaths = [JSONObjectKeyPath componentsSeparatedByString:@"."];
-            NSUInteger count = JSONObjectKeyPaths.count;
-            [JSONObjectKeyPaths enumerateObjectsUsingBlock:^(NSString *JSONObjectKey, NSUInteger idx, BOOL *stop) {
-                if (idx == count - 1) {
-                    currentDictionary[JSONObjectKey] = JSONObjectValue;
-                } else {
-                    NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
-                    
-                    currentDictionary[JSONObjectKey] = dictionary;
-                    currentDictionary = dictionary;
-                }
-            }];
+        NSString *JSONObjectKeyPath = [attributeMapping convertManagedObjectAttributeToJSONObjectAttribute:attributeName];
+        if ([JSONObjectKeyPath isEqualToString:[[[self class] objectDescription] uniqueIdentifierOfJSONObjects]]) {
+            continue;
         }
+        id JSONObjectValue = [objectConverter JSONObjectObjectFromManagedObjectObject:value
+                                                            forManagedObjectAttribute:attributeName];
+        
+        if (!JSONObjectValue) {
+            continue;
+        }
+        
+        __block NSMutableDictionary *currentDictionary = rawJSONDictionary;
+        
+        NSArray *JSONObjectKeyPaths = [JSONObjectKeyPath componentsSeparatedByString:@"."];
+        NSUInteger count = JSONObjectKeyPaths.count;
+        [JSONObjectKeyPaths enumerateObjectsUsingBlock:^(NSString *JSONObjectKey, NSUInteger idx, BOOL *stop) {
+            if (idx == count - 1) {
+                currentDictionary[JSONObjectKey] = JSONObjectValue;
+            } else {
+                NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
+                
+                currentDictionary[JSONObjectKey] = dictionary;
+                currentDictionary = dictionary;
+            }
+        }];
     }
     
     return rawJSONDictionary;

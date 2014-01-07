@@ -305,7 +305,9 @@ static void mergeDictionaries(NSMutableDictionary *mainDictionary, NSDictionary 
 {
     NSAttributeType attributeType = [_attributTypesValidationDictionary[managedObjectAttributeName] unsignedIntegerValue];
     
-    if (attributeType == NSBooleanAttributeType) {
+    if (object == nil) {
+        return [NSNull null];
+    } else if (attributeType == NSBooleanAttributeType) {
         return @([object boolValue]);
     } else if (NSAttributeTypeIsNSNumber(attributeType) || attributeType == NSStringAttributeType) {
         return object;
